@@ -1,0 +1,22 @@
+button {
+	margin-top: 10px;
+	margin-bottom:  10px;
+}
+.container {
+	width: 80%;
+}
+.form {
+	width: 40%;
+}
+.red {
+	color: red;
+}
+.tieude {
+	color: red;
+	background-color: yellow;
+	text-align: center;
+}
+.nutnhap {
+	text-align: center;
+	width: 100%;
+}

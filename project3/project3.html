@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8">
+		<title>project3</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+		<link rel="stylesheet" href="mystyle.css">
+  	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+  	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+  	<script type="text/javascript">
+  		$(document).ready(function(){ //tải tài liệu trước khi mã chạy
+  			var i = 0;
+  			$("#nhap").click(function() { // sự kiện nhập
+  				var uname = $("#uname").val();
+  				var toan = $("#toan").val();
+  				var ly = $("#ly").val();
+  				var hoa = $("#hoa").val();
+  				if(uname.trim() == "" || !uname){ //kiểm tra tên có bị trống không.
+  					alert("Nhập sai tên");
+  					return false;
+  				}
+  				if(isNaN(toan) || toan > 10 || toan.trim() == "" || toan < 0){ // kiểm tra nhập vào có phải số không
+  					alert("Nhập sai điểm toán");
+  					return false;
+  				}
+  				if(isNaN(ly) || ly > 10 || ly.trim() == "" || ly < 0){ // kiểm tra nhập vào có phải số không
+  					alert("Nhập sai điểm lý");
+  					return false;
+  				}
+  				if(isNaN(hoa) || hoa > 10 || hoa.trim() == "" || hoa < 0){ // kiểm tra nhập vào có phải số không
+  					alert("Nhập sai điểm hoá");
+  					return false;
+  				}
+  				i++; // khai báo biến đếm
+  				var content_append = ""; // khai báo chuỗi, sử dung toán tử += để lấy được chuỗi hiển thị ra bảng.
+  				content_append += "<tr class='diem'>"; // đặt tên cho hàng
+  				content_append += "<td>" + i + "</td>"; // ô đếm
+  				content_append += "<td>" + uname + "</td>"; // ô tên
+  				content_append += "<td class='toan'>" + toan + "</td>"; // đặt tên cho ô toán
+  				content_append += "<td class='ly'>" + ly + "</td>"; // đặt tên cho ô lý
+  				content_append += "<td class='hoa'>" + hoa + "</td>"; // đặt tên cho hóa
+  				content_append += "<td class='trung_binh'> ? </td>"; // đặt tên cho ô trung bình
+  				content_append += "</tr>";
+  				$("table").append(content_append); // phương pháp thêm HTML vào sau bảng ban đầu.
+
+  				$("#uname").val("");
+  				$("#toan").val("");
+  				$("#ly").val("");
+  				$("#hoa").val("");
+  			});
+  			$("#diem_trung_binh").click(function() { // sự kiện ấn nút tính tb
+  				$("tr.diem").each( function() { // duyet qua cac phan tu tr có tên diem của bảng.
+  					var toan = $(this).children('td.toan').text(); // lấy chuỗi ở ô toán ra gán cho biến toán
+  					var ly = $(this).children('td.ly').text(); // lấy chuỗi ở ô lý ra gán cho biến lý
+  					var hoa = $(this).children('td.hoa').text(); // lấy chuỗi ở ô hóa ra gán cho biến hóa.
+  					// chuyển chuỗi thành số để thực hiện phép toán sô thực.
+  					var trung_binh = (parseFloat(toan) + parseFloat(hoa) + parseFloat(ly)) / 3;
+  					var diem_trung_binh = trung_binh.toFixed(1); // làm tròn sau dấu chấm 1 số.
+  					// truyền biến điểm trung bình cho ô con  trung bình của bảng
+  					$(this).children('td.trung_binh').text(diem_trung_binh);
+  				});
+  			});
+  			$("#gioi").click(function() { // sự kiện ấn nút xếp loại.
+  				$("tr.diem").each( function() { // duyệt từng hàng của bảng
+  					var x = $(this).children('td.trung_binh').text(); // gán chuỗi của ô trung bình trong hàng cho x.
+  					var xep_loai = parseFloat(x); // chuyển đổi chuỗi thành số
+  					if(xep_loai >= 8) // điểu kiện lớn hon hoặc bằng 8
+  					{
+  						// bôi đỏ phần tử cha.
+  						$(this).css("color", "red");
+  					} 
+  					else if(xep_loai >= 6.5)
+  					{
+  						$(this).css("color", "blue");
+  					}
+  					else if(xep_loai >= 5)
+  					{
+  						$(this).css("color", "green");
+  					}
+  					else
+  					{
+  						$(this).css("color", "rgb(0, 255, 0)");
+  					}
+  				})
+  			});
+  		});
+  	</script>
+	</head>
+	<body>
+		<div class="container form">
+			<h2>Class Marksheet</h2>
+			<form class="needs-validation" novalidate>
+				<div class="form-group">
+					<label for="uname">Họ tên:</label>
+					<input type="text" class="form-control" id="uname" placeholder=
+					"Enter Họ và tên" name="uname" required>
+				</div>
+				<div class="form-group">
+					<label for="toan">Điểm toán:</label>
+					<input type="text" class="form-control" id="toan" placeholder=
+					"Enter điểm toán" name="toan" required>
+				</div>
+				<div class="form-group">
+					<label for="ly">Điểm lý:</label>
+					<input type="text" class="form-control" id="ly" placeholder=
+					"Enter điểm lý" name="ly" required>
+				</div>
+				<div class="form-group">
+					<label for="hoa">Điểm hóa:</label>
+					<input type="text" class="form-control" id="hoa" placeholder=
+					"Enter điểm hóa" name="hoa" required>
+				</div>
+				<div class="nutnhap">
+					<button type="button" class="btn btn-primary" id="nhap">Nhập</button>
+				</div>
+			</form>
+		</div>
+		<div class="container">
+			<div class="table-responsive-lg">
+				<table class="table table-bordered">
+					<tr class="tieude">
+						<th>STT</th>
+						<th>Họ tên</th>
+						<th>Toán</th>
+						<th>Lý</th>
+						<th>Hóa</th>
+						<th>Trung bình</th>
+					</tr>
+				</table>
+				<div class="nutnhap">
+					<button type="submit" class="btn btn-light" id="diem_trung_binh">Tính điểm trung bình</button>
+					<button type="submit" class="btn btn-light" id="gioi">Xác định học sinh giỏi</button>
+				</div>
+			</div>
+		</div>	
+	</body>
+</html>
